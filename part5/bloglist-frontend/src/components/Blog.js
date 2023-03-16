@@ -1,7 +1,12 @@
-const Blog = ({blog}) => (
-  <div>
-    {blog.title} {blog.author}
-  </div>  
-)
+import PropTypes from 'prop-types';
 
-export default Blog
+const Blog = ({ blog }) => (
+  <div>
+    {blog.title} - {blog.author}
+  </div>
+);
+
+Blog.propTypes = {
+  blog:PropTypes.object
+};
+export default Blog;
