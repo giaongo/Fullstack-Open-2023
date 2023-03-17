@@ -1,5 +1,6 @@
 const blogRouter = require('express').Router();
 const Blog = require('../models/blogModel');
+const { userExtractor } = require('../utils/middleware');
 require('express-async-errors');
 
 blogRouter.get('/', async (request,response) => {
@@ -7,7 +8,7 @@ blogRouter.get('/', async (request,response) => {
   response.status(201).json(blogs);
 });
 
-blogRouter.post('/', async (request,response) => {
+blogRouter.post('/',userExtractor ,async (request,response) => {
   const blogToAdd = request.body;
   const user = request.user;
   if(!blogToAdd.title || !blogToAdd.url) {
@@ -23,7 +24,7 @@ blogRouter.post('/', async (request,response) => {
   response.status(201).json(result);
 });
 
-blogRouter.delete('/:id', async(request, response) => {
+blogRouter.delete('/:id', userExtractor, async(request, response) => {
   const blogIdToDelete = request.params.id;
   const user = request.user;
   const blog = await Blog.findById(blogIdToDelete);
