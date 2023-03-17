@@ -12,5 +12,16 @@ const getAll = async (token) => {
     throw new Error('ErrorGettingUser', error);
   }
 };
+const addNewBlog = async (token, newBlog) => {
+  try {
+    const config = {
+      headers: { Authorization: 'Bearer ' + token }
+    };
+    const response = await axios.post(baseUrl, newBlog, config);
+    return response;
+  } catch(error) {
+    throw new Error('ErrorAddingNewBlog', error);
+  }
+};
 
-export default { getAll };
+export default { getAll, addNewBlog };
