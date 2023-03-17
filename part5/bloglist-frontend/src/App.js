@@ -5,7 +5,8 @@ import loginService from './services/login';
 
 const App = () => {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
+  const [token,setToken] = useState(null);
+
   const LoginForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -13,6 +14,7 @@ const App = () => {
       event.preventDefault();
       try {
         const result = await loginService.login({ username, password });
+        window.localStorage.setItem('user', JSON.stringify(result.data));
         setUser({ name: result.data.name });
         setToken(result.data.token);
         console.log('result is', result);
@@ -49,7 +51,7 @@ const App = () => {
 
   const BlogsDisplay = () => {
     const [blogs, setBlogs] = useState([]);
-    const getAllBlogs = async () => {
+    const getAllBlogs = async (token) => {
       try {
         const response = await blogService.getAll(token);
         console.log('blogs response', response);
@@ -58,9 +60,11 @@ const App = () => {
         console.error('ErrorInGettingBlogs', error);
       }
     };
+
     useEffect(() => {
-      getAllBlogs();
+      getAllBlogs(token);
     }, []);
+
     return (
       <>
         {blogs.map((blog) => (
@@ -70,6 +74,21 @@ const App = () => {
     );
   };
 
+  const logoutUser = () => {
+    setUser('');
+    setToken('');
+    window.localStorage.clear();
+  };
+  useEffect((() => {
+    const loggedInUserJSON =  window.localStorage.getItem('user');
+    console.log('loggedInUserJson', loggedInUserJSON);
+    if(loggedInUserJSON) {
+      const loggedInUser = JSON.parse(loggedInUserJSON);
+      setUser({ name: loggedInUser.name });
+      setToken(loggedInUser.token);
+    }
+  }), []);
+
   return (
     <div>
       <h2>blogs</h2>
@@ -77,7 +96,8 @@ const App = () => {
         ? <LoginForm />
         : (
           <>
-            <p>{user.name} logged in</p>
+            <span>{user.name} logged in</span>
+            <button style={{ marginLeft:10 }} onClick={logoutUser}>Logout</button>
             <BlogsDisplay/>
           </>
         ) }

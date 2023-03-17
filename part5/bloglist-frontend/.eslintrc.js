@@ -17,6 +17,7 @@ module.exports = {
   rules: {
     'react/jsx-uses-react': 'error',
     'react/jsx-uses-vars': 'error',
+    'no-unused-vars': 'off',
     'react/react-in-jsx-scope': 0,
     indent: ['error', 2],
     'linebreak-style': ['error', 'windows'],
