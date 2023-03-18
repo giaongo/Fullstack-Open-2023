@@ -9,7 +9,7 @@ const getAll = async (token) => {
     const response = await axios.get(baseUrl, config);
     return response.data;
   } catch (error) {
-    throw new Error('ErrorGettingUser', error);
+    throw new Error('ErrorGettingUser: ' + error.response.data.error);
   }
 };
 const addNewBlog = async (token, newBlog) => {
@@ -20,7 +20,7 @@ const addNewBlog = async (token, newBlog) => {
     const response = await axios.post(baseUrl, newBlog, config);
     return response;
   } catch(error) {
-    throw new Error('ErrorAddingNewBlog', error);
+    throw new Error('ErrorAddingNewBlog: ' + error.response.data.error);
   }
 };
 

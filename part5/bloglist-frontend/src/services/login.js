@@ -5,8 +5,8 @@ const login = async(userData) => {
   try {
     const response = await axios.post(baseUrl, userData);
     return response;
-  } catch (error) {
-    throw new Error('ErrorLoginUser', error);
+  } catch (e) {
+    throw new Error('ErrorLoginUser: ' + e.response.data.error);
   }
 };
 
