@@ -12,7 +12,7 @@ blogRouter.post('/',userExtractor ,async (request,response) => {
   const blogToAdd = request.body;
   const user = request.user;
   if(!blogToAdd.title || !blogToAdd.url) {
-    return response.status(400).end();
+    return response.status(400).json({ error: 'missing data' });
   }
   blogToAdd.likes = blogToAdd.likes || 0 ;
   const updatedUserInfoBlog = { ...request.body,user: user._id };
