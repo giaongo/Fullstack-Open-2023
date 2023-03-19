@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import blogService from '../services/blogs';
 import Blog from './Blog';
 import PropTypes from 'prop-types';
+import Toggleble from './Toggleble';
 
 const BlogsDisplay = ({ token, update }) => {
   const [blogs, setBlogs] = useState([]);
@@ -28,7 +29,7 @@ const BlogsDisplay = ({ token, update }) => {
 };
 
 BlogsDisplay.propTypes = {
-  token:PropTypes.string,
-  update:PropTypes.bool
+  token: PropTypes.string,
+  update: PropTypes.bool,
 };
 export default BlogsDisplay;
