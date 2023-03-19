@@ -21,7 +21,7 @@ const App = () => {
     const loggedInUserJSON = window.localStorage.getItem('user');
     if (loggedInUserJSON) {
       const loggedInUser = JSON.parse(loggedInUserJSON);
-      setUser({ name: loggedInUser.name });
+      setUser({ name: loggedInUser.name, id:loggedInUser.id });
       setToken(loggedInUser.token);
     }
   }, []);
@@ -58,7 +58,11 @@ const App = () => {
             />
           </Toggleble>
 
-          <BlogsDisplay token={token} update={update} />
+          <BlogsDisplay
+            token={token}
+            update={update}
+            setUpdate={setUpdate}
+            user={user}/>
         </>
       )}
     </div>
