@@ -4,7 +4,7 @@ const app = require('../app');
 
 const api = supertest(app);
 const Blog = require('../models/blogModel');
-const { blogsInDb, blogById, usersInDb } = require('./test_helper');
+const { blogsInDb, blogById } = require('./test_helper');
 
 const initialBlogs = [
   {

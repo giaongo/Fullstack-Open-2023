@@ -2,7 +2,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import blogService from '../services/blogs';
 
-const NewBlogForm = ({ token, updateFunction, setNotificationStatus, setNotificationMessage }) => {
+const NewBlogForm = ({ token, updateFunction, setNotificationStatus, setNotificationMessage, blogFormRef }) => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
@@ -13,6 +13,7 @@ const NewBlogForm = ({ token, updateFunction, setNotificationStatus, setNotifica
       const result = await blogService.addNewBlog(token, { title, author, url });
       if(result.status === 201) {
         updateFunction.setUpdate(!updateFunction.update);
+        blogFormRef.current.toggleVisibility();
         console.log('result added log is', result);
         setTitle('');
         setAuthor('');
@@ -71,7 +72,8 @@ NewBlogForm.propTypes = {
   token: PropTypes.string,
   updateFunction: PropTypes.object,
   setNotificationStatus: PropTypes.func,
-  setNotificationMessage: PropTypes.func
+  setNotificationMessage: PropTypes.func,
+  blogFormRef:PropTypes.object
 };
 
 export default NewBlogForm;
