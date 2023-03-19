@@ -6,3 +6,4 @@ This contains list of exercises' solution for Fullstack open course 2023
 * part 2: [Communicating with server](https://fullstackopen.com/en/part2)
 * part 3: [Programming a server with NodeJS and Express](https://fullstackopen.com/en/part3)
 * part 4: [Testing Express servers, user administration](https://fullstackopen.com/en/part4)
+* part 5: [Testing React apps](https://fullstackopen.com/en/part5)
