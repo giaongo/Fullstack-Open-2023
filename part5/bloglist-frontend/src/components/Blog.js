@@ -4,7 +4,7 @@ import blogService from '../services/blogs';
 const Blog = ({ blog, update, setUpdate, user, token }) => {
   const [visibleBlogDetail, setVisibleBlogDetail] = useState(false);
   const [likeBlogNumber, setLikeBlogNumber] = useState(blog.likes);
-  const visibleDeleteBtn = blog.user.id === user.id;
+  const visibleDeleteBtn = user && blog.user.id === user.id;
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -44,7 +44,7 @@ const Blog = ({ blog, update, setUpdate, user, token }) => {
   };
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className='blog'>
       <div style={{ color:'#02507a', fontWeight:'bold' }}>
         {blog.title} - {blog.author}
         <button onClick={toggleDetailVisibiity} style={viewBtnStyle}>
@@ -52,7 +52,7 @@ const Blog = ({ blog, update, setUpdate, user, token }) => {
         </button>
       </div>
       {visibleBlogDetail && (
-        <>
+        <div>
           <div>
             <a href={blog.url}>{blog.url}</a>
           </div>
@@ -79,7 +79,7 @@ const Blog = ({ blog, update, setUpdate, user, token }) => {
             </>
 
           )}
-        </>
+        </div>
       )}
     </div>
   );
