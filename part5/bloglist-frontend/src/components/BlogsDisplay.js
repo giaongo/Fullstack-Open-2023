@@ -3,7 +3,7 @@ import blogService from '../services/blogs';
 import Blog from './Blog';
 import PropTypes from 'prop-types';
 
-const BlogsDisplay = ({ token, update, setUpdate, user }) => {
+const BlogsDisplay = ({ token, user, update, setUpdate }) => {
   const [blogs, setBlogs] = useState([]);
   const getAllBlogs = async (token) => {
     try {
@@ -15,6 +15,27 @@ const BlogsDisplay = ({ token, update, setUpdate, user }) => {
     }
   };
 
+  const increaseLikeNumber = async (likeNum, blog) => {
+    try {
+      const newLike = likeNum + 1;
+      const result = await blogService.updateLike(blog.id, newLike);
+      return result.likes;
+    } catch (error) {
+      console.error('ErrorLikingBlog', error.message);
+    }
+  };
+
+  const deleteBlog = async (blog) => {
+    try {
+      if (window.confirm(`Remove blog '${blog.title}' by ${blog.author}`)) {
+        const result = await blogService.deleteBlog(blog.id, token);
+        console.log('Deleting result', result);
+        setUpdate(!update);
+      }
+    } catch (error) {
+      console.error('ErrorDeletingBlog', error.message);
+    }
+  };
   useEffect(() => {
     getAllBlogs(token);
   }, [update]);
@@ -25,10 +46,9 @@ const BlogsDisplay = ({ token, update, setUpdate, user }) => {
         <Blog
           key={blog.id}
           blog={blog}
-          update={update}
-          setUpdate={setUpdate}
-          user={user}
-          token={token}/>
+          increaseLikeNumber={increaseLikeNumber}
+          deleteBlog = {deleteBlog}
+          user={user}/>
       ))}
     </>
   );
@@ -36,8 +56,8 @@ const BlogsDisplay = ({ token, update, setUpdate, user }) => {
 
 BlogsDisplay.propTypes = {
   token: PropTypes.string,
-  update: PropTypes.bool,
-  setUpdate:PropTypes.func,
-  user:PropTypes.object
+  user:PropTypes.object,
+  update:PropTypes.bool,
+  setUpdate:PropTypes.func
 };
 export default BlogsDisplay;

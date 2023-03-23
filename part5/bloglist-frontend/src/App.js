@@ -4,17 +4,39 @@ import LoginForm from './components/LoginForm';
 import NewBlogForm from './components/NewBlogForm';
 import Notification from './components/Notification';
 import Toggleble from './components/Toggleble';
+import blogService from './services/blogs';
 const App = () => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [update, setUpdate] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState('');
   const [notificationStatus, setNotificationStatus] = useState('');
+
   const blogFormRef = useRef();
+
   const logoutUser = () => {
     setUser('');
     setToken('');
     window.localStorage.clear();
+  };
+
+  const createNewBlog = async(title, author, url) => {
+    const result = await blogService.addNewBlog(token, { title, author, url });
+    try {
+      setUpdate(!update);
+      blogFormRef.current.toggleVisibility();
+      setNotificationStatus('success');
+      setNotificationMessage(`a new blog '${result.data.title}' by ${result.data.author} added`);
+    } catch(error) {
+      setNotificationStatus('error');
+      setNotificationMessage(error.message);
+      throw new Error ('ErrorAddingNewBlog'+ error);
+    } finally {
+      setTimeout((() => {
+        setNotificationStatus('');
+        setNotificationMessage('');
+      }),4000);
+    }
   };
 
   useEffect(() => {
@@ -50,19 +72,15 @@ const App = () => {
           </button>
           <Toggleble buttonLabel="create new blog" ref={blogFormRef}>
             <NewBlogForm
-              token={token}
-              updateFunction={{ update, setUpdate }}
-              setNotificationStatus={setNotificationStatus}
-              setNotificationMessage={setNotificationMessage}
-              blogFormRef={blogFormRef}
+              createNewBlog = {createNewBlog}
             />
           </Toggleble>
 
           <BlogsDisplay
             token={token}
+            user={user}
             update={update}
-            setUpdate={setUpdate}
-            user={user}/>
+            setUpdate={setUpdate}/>
         </>
       )}
     </div>
