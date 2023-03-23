@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 const Notification = ({ status, message }) => {
   return (
     <div
+      className="notiBox"
       style={{
         backgroundColor: '#e6e4e3',
         borderRadius: 8,
@@ -9,7 +10,7 @@ const Notification = ({ status, message }) => {
         marginBottom:15
       }}
     >
-      <p style={{ padding:1 }}>{message}</p>
+      <p style={{ padding:1 }} className="messageNoti">{message}</p>
     </div>
   );
 };
