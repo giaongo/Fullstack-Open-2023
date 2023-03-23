@@ -3,7 +3,8 @@ module.exports = {
   env: {
     browser: true,
     es6: true,
-    'jest/globals': true
+    'jest/globals': true,
+    'cypress/globals':true
   },
   extends: ['eslint:recommended', 'plugin:react/recommended'],
   overrides: [],
@@ -14,14 +15,14 @@ module.exports = {
       jsx: true,
     },
   },
-  plugins: ['react', 'jest'],
+  plugins: ['react', 'jest','cypress'],
   rules: {
     'react/jsx-uses-react': 'error',
     'react/jsx-uses-vars': 'error',
     'no-unused-vars': 'off',
     'react/react-in-jsx-scope': 0,
     indent: ['error', 2],
-    'linebreak-style': ['error', 'windows'],
+    'linebreak-style': 0,
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
     'no-trailing-spaces': 'error',

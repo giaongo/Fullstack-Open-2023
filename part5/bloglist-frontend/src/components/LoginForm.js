@@ -36,6 +36,7 @@ const LoginForm = ({ setUser, setToken, setNotificationStatus, setNotificationMe
           value={username}
           name="username"
           autoComplete="on"
+          id="username"
           onChange={(event) => setUsername(event.target.value)}
         />
       </div>
@@ -45,11 +46,12 @@ const LoginForm = ({ setUser, setToken, setNotificationStatus, setNotificationMe
           type="password"
           value={password}
           name="password"
+          id="password"
           autoComplete="on"
           onChange={(event) => setPassword(event.target.value)}
         />
       </div>
-      <button type="submit">Submit</button>
+      <button type="submit" id="submitLogin">Submit</button>
     </form>
   );
 };

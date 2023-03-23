@@ -3,8 +3,9 @@ import { useState } from 'react';
 const Blog = ({ blog, user, increaseLikeNumber , deleteBlog }) => {
   const [visibleBlogDetail, setVisibleBlogDetail] = useState(false);
   const [likeBlogNumber, setLikeBlogNumber] = useState(blog.likes);
-  const visibleDeleteBtn = user && blog.user.id === user.id;
-
+  // const visibleDeleteBtn = blog && user ? blog.user.id === user.id : false;
+  const visibleDeleteBtn = false;
+  console.log('blog is', blog,'user is', user);
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
