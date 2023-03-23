@@ -3,6 +3,7 @@ import '@testing-library/jest-dom/extend-expect';
 import { render, screen } from '@testing-library/react';
 import Blog from './Blog';
 import userEvent from '@testing-library/user-event';
+import NewBlogForm from './NewBlogForm';
 
 test('renders blog content without url and likes', () => {
   const blog = {
@@ -61,6 +62,31 @@ describe('Testing button togglable', () => {
       await user1.click(likeBtn);
     }
     expect(likeMockHandler.mock.calls).toHaveLength(2);
+  });
+});
+
+describe('testing the form', () => {
+
+  test('blog form', async () => {
+    const user = userEvent.setup();
+    const createBlog = jest.fn();
+    const { container } = render(<NewBlogForm createNewBlog={createBlog}/>);
+    const inputTitle = container.querySelector('#title-input');
+    const inputAuthor = container.querySelector('#author-input');
+    const inputUrl = container.querySelector('#url-input');
+
+    await user.type(inputTitle, 'testing with form...');
+    await user.type(inputAuthor, 'test');
+    await user.type(inputUrl, 'test.com');
+
+    const submitBtn = screen.getByText('Create');
+    await user.click(submitBtn);
+
+    expect(createBlog.mock.calls).toHaveLength(1);
+    expect(createBlog.mock.calls[0][0]).toBe('testing with form...');
+    expect(createBlog.mock.calls[0][1]).toBe('test');
+    expect(createBlog.mock.calls[0][2]).toBe('test.com');
+
   });
 });
 

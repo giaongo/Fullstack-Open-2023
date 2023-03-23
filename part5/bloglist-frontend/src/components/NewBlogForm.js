@@ -1,10 +1,26 @@
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 
-const NewBlogForm = ({ title, author, url, setTitle, setAuthor, setUrl, handleFormSubmmision }) => {
+
+const NewBlogForm = ({ createNewBlog }) => {
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [url, setUrl] = useState('');
+  const handleBlogFormSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      await createNewBlog(title, author, url);
+      setTitle('');
+      setAuthor('');
+      setUrl('' );
+    } catch(error) {
+      console.log('ErrorAddingNewBlog', error);
+    }
+  };
   return(
     <div>
       <h2>create new</h2>
-      <form onSubmit={handleFormSubmmision}>
+      <form onSubmit={handleBlogFormSubmit}>
         <div>
             title:
           <input
@@ -12,6 +28,7 @@ const NewBlogForm = ({ title, author, url, setTitle, setAuthor, setUrl, handleFo
             value={title}
             name="title"
             onChange={(event) => setTitle(event.target.value) }
+            id = 'title-input'
           />
         </div>
         <div>
@@ -21,6 +38,7 @@ const NewBlogForm = ({ title, author, url, setTitle, setAuthor, setUrl, handleFo
             value={author}
             name="author"
             onChange={(event) => setAuthor(event.target.value)}
+            id = 'author-input'
           />
         </div>
         <div>
@@ -30,6 +48,7 @@ const NewBlogForm = ({ title, author, url, setTitle, setAuthor, setUrl, handleFo
             value={url}
             name="url"
             onChange={(event) => setUrl(event.target.value)}
+            id = 'url-input'
           />
         </div>
         <button type="submit" style={{ margin:10 }}>Create</button>
@@ -39,14 +58,7 @@ const NewBlogForm = ({ title, author, url, setTitle, setAuthor, setUrl, handleFo
 };
 
 NewBlogForm.propTypes = {
-  title: PropTypes.string,
-  author: PropTypes.string,
-  url: PropTypes.string,
-  setTitle: PropTypes.func,
-  setAuthor: PropTypes.func,
-  setUrl: PropTypes.func,
-  handleFormSubmmision: PropTypes.func,
-
+  createNewBlog: PropTypes.func
 };
 
 export default NewBlogForm;
