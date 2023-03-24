@@ -41,7 +41,7 @@ const BlogsDisplay = ({ token, user, update, setUpdate }) => {
   }, [update]);
 
   return (
-    <>
+    <div>
       {blogs.map((blog) => (
         <Blog
           key={blog.id}
@@ -50,7 +50,7 @@ const BlogsDisplay = ({ token, user, update, setUpdate }) => {
           deleteBlog = {deleteBlog}
           user={user}/>
       ))}
-    </>
+    </div>
   );
 };
 

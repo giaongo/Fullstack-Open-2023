@@ -3,8 +3,7 @@ import { useState } from 'react';
 const Blog = ({ blog, user, increaseLikeNumber , deleteBlog }) => {
   const [visibleBlogDetail, setVisibleBlogDetail] = useState(false);
   const [likeBlogNumber, setLikeBlogNumber] = useState(blog.likes);
-  const visibleDeleteBtn = false;
-  console.log('blog is', blog,'user is', user);
+  const visibleDeleteBtn = blog && user ? blog.user.id === user.id : false;
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -24,7 +23,7 @@ const Blog = ({ blog, user, increaseLikeNumber , deleteBlog }) => {
   return (
     <div style={blogStyle} className='blog'>
       <div style={{ color: '#02507a', fontWeight: 'bold' }}>
-        {blog.title} - {blog.author}
+        <span>{blog.title} - {blog.author}</span>
         <button
           onClick={toggleDetailVisibiity}
           style={viewBtnStyle}
@@ -61,6 +60,7 @@ const Blog = ({ blog, user, increaseLikeNumber , deleteBlog }) => {
           {visibleDeleteBtn && (
             <>
               <button
+                id='deleteBtn'
                 style={{
                   backgroundColor: 'red',
                   color: 'white',

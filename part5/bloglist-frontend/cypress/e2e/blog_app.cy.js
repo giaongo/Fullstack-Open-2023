@@ -62,9 +62,15 @@ describe('Blog App', () => {
         cy.createBlog({ title:'second cypress blog', author:'Timo', url:'timo.com' });
       });
       it('user can like a blog', () => {
-        cy.get('.detailBtn').contains('view').click();
-        cy.get('#likeBtn').click();
-        cy.get('.likeSection').contains('1');
+        cy.contains('another cypress blog').parent().find('button').click();
+        cy.contains('another cypress blog').parents('.blog').get('#likeBtn').click();
+        cy.contains('another cypress blog').parents('.blog').get('.likeSection').contains('1');
+      });
+      it('user can delete a blog', () => {
+        cy.contains('another cypress blog').parent().find('button').click();
+        cy.contains('another cypress blog').parents('.blog').find('button').last().as('Delete');
+        cy.get('@Delete').click();
+        cy.contains('another cypress blog').should('not.exist');
       });
     });
 
