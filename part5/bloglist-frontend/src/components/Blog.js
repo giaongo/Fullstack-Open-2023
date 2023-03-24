@@ -3,7 +3,6 @@ import { useState } from 'react';
 const Blog = ({ blog, user, increaseLikeNumber , deleteBlog }) => {
   const [visibleBlogDetail, setVisibleBlogDetail] = useState(false);
   const [likeBlogNumber, setLikeBlogNumber] = useState(blog.likes);
-  // const visibleDeleteBtn = blog && user ? blog.user.id === user.id : false;
   const visibleDeleteBtn = false;
   console.log('blog is', blog,'user is', user);
   const blogStyle = {
@@ -23,25 +22,26 @@ const Blog = ({ blog, user, increaseLikeNumber , deleteBlog }) => {
 
 
   return (
-    <div style={blogStyle} className="blog">
+    <div style={blogStyle} className='blog'>
       <div style={{ color: '#02507a', fontWeight: 'bold' }}>
         {blog.title} - {blog.author}
         <button
           onClick={toggleDetailVisibiity}
           style={viewBtnStyle}
-          className="detailBtn"
+          className = 'detailBtn'
         >
           {visibleBlogDetail ? 'hide' : 'view'}
         </button>
       </div>
       {visibleBlogDetail && (
-        <div className="togglableContent">
+        <div className='togglableContent'>
           <div>
             <a href={blog.url}>{blog.url}</a>
           </div>
-          <div>
+          <div className='likeSection'>
             likes {likeBlogNumber}
             <button
+              id='likeBtn'
               style={{
                 backgroundColor: '#bee3f7',
                 marginLeft: 5,

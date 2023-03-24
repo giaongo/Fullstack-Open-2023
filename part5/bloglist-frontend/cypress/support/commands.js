@@ -10,7 +10,24 @@
 //
 //
 // -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
+Cypress.Commands.add('login', ({ username, password }) => {
+  cy.request('POST', `${Cypress.env('BACKEND')}/login`, { username, password })
+    .then(response => {
+      localStorage.setItem('user', JSON.stringify(response.body));
+      cy.visit('');
+    }) ;
+});
+Cypress.Commands.add('createBlog', ({ title, author, url }) => {
+  cy.request({
+    url: `${Cypress.env('BACKEND')}/blogs`,
+    method:'POST',
+    body: { title, author, url },
+    headers: {
+      'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
+    }
+  });
+  cy.visit('');
+});
 //
 //
 // -- This is a child command --
