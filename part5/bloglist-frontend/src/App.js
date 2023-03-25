@@ -67,7 +67,7 @@ const App = () => {
       ) : (
         <>
           <span>{user.name} logged in</span>
-          <button style={{ marginLeft: 10 }} onClick={logoutUser}>
+          <button id="logoutBtn" style={{ marginLeft: 10 }} onClick={logoutUser}>
             Logout
           </button>
           <Toggleble buttonLabel="create new blog" ref={blogFormRef}>

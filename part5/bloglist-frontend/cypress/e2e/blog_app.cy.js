@@ -72,6 +72,13 @@ describe('Blog App', () => {
         cy.get('@Delete').click();
         cy.contains('another cypress blog').should('not.exist');
       });
+      it('Non-blog creators cannot see delete button', () => {
+        cy.get('#logoutBtn').click();
+        cy.createUser({ name:'Helena', username:'helena', password:'test456' });
+        cy.login({ username:'helena', password:'test456' });
+        cy.contains('another cypress blog').parent().find('button').click();
+        cy.contains('another cypress blog').parents('.blog').get('#deleteBtn').should('not.exist');
+      });
     });
 
   });

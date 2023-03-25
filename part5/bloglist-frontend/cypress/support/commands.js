@@ -28,6 +28,9 @@ Cypress.Commands.add('createBlog', ({ title, author, url }) => {
   });
   cy.visit('');
 });
+Cypress.Commands.add('createUser', ({ name, username, password }) => {
+  cy.request('POST',`${Cypress.env('BACKEND')}/users`, { name,username,password });
+});
 //
 //
 // -- This is a child command --
