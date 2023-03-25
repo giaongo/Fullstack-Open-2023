@@ -32,24 +32,26 @@ const LoginForm = ({ setUser, setToken, setNotificationStatus, setNotificationMe
       <div>
           username
         <input
-          type="text"
+          type='text'
           value={username}
-          name="username"
-          autoComplete="on"
+          name='username'
+          autoComplete='on'
+          id='username'
           onChange={(event) => setUsername(event.target.value)}
         />
       </div>
       <div>
           password
         <input
-          type="password"
+          type='password'
           value={password}
-          name="password"
-          autoComplete="on"
+          name='password'
+          id='password'
+          autoComplete='on'
           onChange={(event) => setPassword(event.target.value)}
         />
       </div>
-      <button type="submit">Submit</button>
+      <button type='submit' id='submitLogin'>Submit</button>
     </form>
   );
 };

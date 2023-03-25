@@ -19,6 +19,7 @@ const BlogsDisplay = ({ token, user, update, setUpdate }) => {
     try {
       const newLike = likeNum + 1;
       const result = await blogService.updateLike(blog.id, newLike);
+      setUpdate(!update);
       return result.likes;
     } catch (error) {
       console.error('ErrorLikingBlog', error.message);
@@ -41,7 +42,7 @@ const BlogsDisplay = ({ token, user, update, setUpdate }) => {
   }, [update]);
 
   return (
-    <>
+    <div>
       {blogs.map((blog) => (
         <Blog
           key={blog.id}
@@ -50,7 +51,7 @@ const BlogsDisplay = ({ token, user, update, setUpdate }) => {
           deleteBlog = {deleteBlog}
           user={user}/>
       ))}
-    </>
+    </div>
   );
 };
 
