@@ -19,6 +19,7 @@ const BlogsDisplay = ({ token, user, update, setUpdate }) => {
     try {
       const newLike = likeNum + 1;
       const result = await blogService.updateLike(blog.id, newLike);
+      setUpdate(!update);
       return result.likes;
     } catch (error) {
       console.error('ErrorLikingBlog', error.message);

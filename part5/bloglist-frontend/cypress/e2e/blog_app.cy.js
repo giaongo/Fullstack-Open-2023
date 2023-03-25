@@ -79,6 +79,16 @@ describe('Blog App', () => {
         cy.contains('another cypress blog').parent().find('button').click();
         cy.contains('another cypress blog').parents('.blog').get('#deleteBtn').should('not.exist');
       });
+      it('blog has most like stays at first', () => {
+        cy.get('.blog').eq(0).should('contain', 'another cypress blog');
+        cy.get('.blog').eq(1).should('contain', 'second cypress blog');
+        cy.get('.blog').eq(1).find('.detailBtn').first().click();
+        for(let i = 0; i < 2; i++) {
+          cy.get('.blog').eq(1).find('#likeBtn').click();
+        }
+        cy.wait(2000);
+        cy.get('.blog').eq(0).should('contain', 'second cypress blog');
+      });
     });
 
   });
