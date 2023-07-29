@@ -7,7 +7,6 @@ const App = () => {
 
   // function triggers action dispatching for incrementing vote
   const vote = (id) => {
-    console.log("vote is selected for " + id)
     dispatch(voteAnecdote(id))
   }
 

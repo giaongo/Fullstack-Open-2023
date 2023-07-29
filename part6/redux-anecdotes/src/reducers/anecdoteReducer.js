@@ -30,7 +30,9 @@ const reducer = (state = initialState, action) => {
       // create a new anecdote by incrementing vote number
       const changedAnecdote = {...anecdoteToChange, votes:anecdoteToChange.votes + 1}
       // return a new state with new anecdote in place
-      return state.map(anecdote => anecdote.id === changedAnecdote.id ? changedAnecdote : anecdote)
+      return state
+      .map(anecdote => anecdote.id === changedAnecdote.id ? changedAnecdote : anecdote)
+      .sort((anecdote1, anecdote2) => anecdote2.votes - anecdote1.votes)
     }
     case 'ADD': {
       return state.concat(action.payload)
