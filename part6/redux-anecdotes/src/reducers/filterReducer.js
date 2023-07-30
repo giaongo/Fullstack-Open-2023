@@ -1,21 +1,17 @@
-const filterReducer = (state = 'ALL', action) => {
-    console.log("ACTION ", action);
-    switch(action.type) {
-        case 'SET_FILTER':
+import { createSlice } from "@reduxjs/toolkit"
+const initialState = 'ALL'
+
+/*This function returns an object containing the reducer and the action creators defined by the reducers parameter */
+const filterSlide = createSlice({
+    name: 'filter',
+    initialState,
+    reducers: {
+        filterChange(state, action) {
             return action.payload
-        default:
-            return state
+        }
     }
-}
-
-// filter change action
-export const filterChange = filter => {
-    return {
-        type: 'SET_FILTER',
-        payload: filter
-    }
-}
+})
 
 
-
-export default filterReducer
+export const {filterChange} = filterSlide.actions
+export default filterSlide.reducer

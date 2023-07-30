@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { addNewAnecdote } from '../reducers/anecdoteReducer'
 
+
 const AnecdoteForm = () => {
     const dispatch = useDispatch()
     // function triggers action dispatching for adding new anecdote
