@@ -23,7 +23,13 @@ const SingleAcnecdote = ({anecdote}) => {
 }
 const AnecdoteList = () => {
 
-    const anecdotes = useSelector(state => state)
+    const anecdotes = useSelector(state => {
+      if(state.filter !== 'ALL' && state.filter !== '') {
+        return state.anecdote.filter(anecdote => anecdote.content.includes(state.filter))
+      }
+      return state.anecdote
+    })
+
   return (
     <>
         {anecdotes.map(element => <SingleAcnecdote anecdote = {element} key={element.id}/>)}
