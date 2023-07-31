@@ -39,6 +39,7 @@ const anecdoteSlice = createSlice({
     },
   
     addNewAnecdote(state, action) {
+      console.log("Action ", action);
       console.log(JSON.parse(JSON.stringify(state)));
       return state.concat({
         content: action.payload,
