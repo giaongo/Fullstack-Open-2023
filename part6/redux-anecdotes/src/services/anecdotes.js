@@ -14,5 +14,11 @@ const addAnecdote = async(newAnecdote) => {
     const response = await axios.post(baseUrl, newObject)
     return response.data
 }
+
+const increaseVoteAnecdote = async(anecdoteToUpdate) => {
+    const response = await axios.put(baseUrl + `/${anecdoteToUpdate.id}`, anecdoteToUpdate)
+    return response.data
+
+}
 // eslint-disable-next-line 
-export default {getAll, addAnecdote} 
+export default {getAll, addAnecdote, increaseVoteAnecdote} 

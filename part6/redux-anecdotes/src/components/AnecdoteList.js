@@ -1,13 +1,13 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { voteAnecdote } from '../reducers/anecdoteReducer'
+import { voteAnecdote, voteSingleAnecdote } from '../reducers/anecdoteReducer'
 
 const SingleAcnecdote = ({anecdote, displayNotification}) => {
     const dispatch = useDispatch()
 
       // function triggers action dispatching for incrementing vote
     const vote = (id, content) => {
-        dispatch(voteAnecdote(id))
+        dispatch(voteSingleAnecdote(id))
         displayNotification(`you voted '${content}'`)
     }
     return (

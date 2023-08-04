@@ -3,7 +3,7 @@
     {
       "content": "If it hurts, do it more often",
       "id": "47145",
-      "votes": 0
+      "votes": 1
     },
     {
       "content": "Adding manpower to a late software project makes it later!",
@@ -28,11 +28,11 @@
     {
       "content": "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
       "id": "98312",
-      "votes": 0
+      "votes": 2
     },
     {
       "content": "This is a test",
-      "votes": 0,
+      "votes": 1,
       "id": "lwPbXHC"
     },
     {
@@ -47,7 +47,7 @@
     },
     {
       "content": "This is Friday, the last day of the week. I had a hard working week and I am happy with the result",
-      "votes": 0,
+      "votes": 3,
       "id": "WyFOrXQ"
     }
   ]
