@@ -2,8 +2,11 @@ import { useMutation, useQuery, useQueryClient } from 'react-query'
 import AnecdoteForm from './components/AnecdoteForm'
 import Notification from './components/Notification'
 import { getAnecdotes, updateAnecdote } from './serverRequests/requests'
+import NotiContext, { NotiContextProvider, displayNotification } from './NotiContext'
+import { useContext } from 'react'
 
 const App = () => {
+  const [notiState, notiDispatch] = useContext(NotiContext)
   const queryClient = useQueryClient()
   const updateAnecdoteMutation = useMutation(updateAnecdote, {
     onSuccess:(votedAnecdote) => {
@@ -24,6 +27,7 @@ const App = () => {
     const updatedAnecdote = {...anecdote, votes: anecdote.votes + 1}
     // does the mutation with the updated anecdote with incremented vote number
     updateAnecdoteMutation.mutate(updatedAnecdote)
+    displayNotification(notiDispatch, `you voted "${anecdote.content}"`)
   }
 
   // fetch all anecdotes query
@@ -43,24 +47,24 @@ const App = () => {
   const anecdotes = fetchAllAnecdotesResult.data
 
   return (
-    <div>
-      <h3>Anecdote app</h3>
-    
-      <Notification />
-      <AnecdoteForm />
-    
-      {anecdotes.map(anecdote =>
-        <div key={anecdote.id}>
-          <div>
-            {anecdote.content}
+      <div>
+        <h3>Anecdote app</h3>
+      
+        <Notification />
+        <AnecdoteForm />
+      
+        {anecdotes.map(anecdote =>
+          <div key={anecdote.id}>
+            <div>
+              {anecdote.content}
+            </div>
+            <div>
+              has {anecdote.votes}
+              <button onClick={() => handleVote(anecdote)}>vote</button>
+            </div>
           </div>
-          <div>
-            has {anecdote.votes}
-            <button onClick={() => handleVote(anecdote)}>vote</button>
-          </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
   )
 }
 
