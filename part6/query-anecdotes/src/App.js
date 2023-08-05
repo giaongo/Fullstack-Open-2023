@@ -1,25 +1,42 @@
-import { useQuery } from 'react-query'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
 import AnecdoteForm from './components/AnecdoteForm'
 import Notification from './components/Notification'
-import { getAnecdotes } from './requests'
-import axios from 'axios'
+import { getAnecdotes, updateAnecdote } from './serverRequests/requests'
 
 const App = () => {
+  const queryClient = useQueryClient()
+  const updateAnecdoteMutation = useMutation(updateAnecdote, {
+    onSuccess:(votedAnecdote) => {
+      // refetch all anecdotes by making another http GET request -> not an optimized option with large database
+      // queryClient.invalidateQueries("anecdotes")
+
+      // the better option -> manually update the query state maintained by the react query
+      const anecdotes = queryClient.getQueryData("anecdotes")
+      queryClient.setQueryData("anecdotes", 
+      anecdotes
+      .map(anecdote => anecdote.id === votedAnecdote.id ? votedAnecdote : anecdote )
+      .sort((firstAnecdote, secondAnecdote) => secondAnecdote.votes - firstAnecdote.votes)
+      )
+    }
+  })
 
   const handleVote = (anecdote) => {
-    console.log('vote')
+    const updatedAnecdote = {...anecdote, votes: anecdote.votes + 1}
+    // does the mutation with the updated anecdote with incremented vote number
+    updateAnecdoteMutation.mutate(updatedAnecdote)
   }
 
- 
-
-  const fetchAllAnecdotesResult = useQuery("anecdotes", getAnecdotes, {retry: false})
+  // fetch all anecdotes query
+  const fetchAllAnecdotesResult = useQuery("anecdotes", getAnecdotes, {retry: false, refetchOnWindowFocus:false})
 
   console.log(fetchAllAnecdotesResult)
 
+  // if isLoading is true
   if(fetchAllAnecdotesResult.isLoading) {
     return <div>Server is loading...</div>
   }
 
+  // if isError is true
   if(fetchAllAnecdotesResult.isError) {
     return <div>anecdote service not available due to problem in server</div>
   }
