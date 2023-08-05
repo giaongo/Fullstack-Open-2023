@@ -32,7 +32,7 @@ const anecdoteSlice = createSlice({
 export const {voteAnecdote, addNewAnecdote, setAnecdotes} = anecdoteSlice.actions
 
 //React Thunk pattern receives Redux dispatch and getState methods as parameters.
-// Use this to have a dispatcher accessible in other non-component place.
+// fetch all anecdotes from database and set the state
 export const initializeAnecdotes = () => {
   return async dispatch => {
     const anecdotes = await anecdoteService.getAll()
@@ -41,7 +41,7 @@ export const initializeAnecdotes = () => {
 }
 
 //React Thunk pattern receives Redux dispatch and getState methods as parameters.
-// Use this to have a dispatcher accessible in other non-component place.
+// add the specific anecdotes to database and set the state
 export const addAnecdote = (newAnecdote) => {
   return async dispatch => {
     const anecdote = await anecdoteService.addAnecdote(newAnecdote)
@@ -49,13 +49,15 @@ export const addAnecdote = (newAnecdote) => {
   }
 }
 
+// React Thunk pattern receives Redux dispatch and getState methods as parameters.
+// vote a single note by searching the note from the state -> update the database and update the state
 export const voteSingleAnecdote = (id) => {
   return async (dispatch,getState) => {
       const state = getState()
       // find the anecdote by id
        const anecdoteToChange = state.anecdote.find(anecdote => anecdote.id === id)
 
-      // // create a new anecdote by incrementing vote number
+      // create a new anecdote by incrementing vote number
       const changedAnecdote = {...anecdoteToChange, votes:anecdoteToChange.votes + 1}
       
       const updatedAnecdote = await anecdoteService.increaseVoteAnecdote(changedAnecdote)

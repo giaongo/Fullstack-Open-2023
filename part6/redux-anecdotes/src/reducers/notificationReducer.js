@@ -25,3 +25,14 @@ const notificationSlice = createSlice({
 
 export const {showNoti, hideNoti} = notificationSlice.actions
 export default  notificationSlice.reducer
+
+// React Thunk pattern receives Redux dispatch and getState methods as parameters.
+// show and hide the notification after 5s
+export const displayNotification = (message, timeout) => {
+    return async (dispatch, getState) => {
+      dispatch(showNoti(message))
+      setTimeout(() => {
+        dispatch(hideNoti())
+      }, timeout)
+    }
+  }

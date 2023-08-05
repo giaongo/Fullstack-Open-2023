@@ -15,20 +15,14 @@ const App = () => {
     dispatch(initializeAnecdotes())
   }, [dispatch])
 
-  // function to display the notification in 5s
-  const displayNotification = (message) => {
-      dispatch(showNoti(message))
-      setTimeout(() => {
-        dispatch(hideNoti())
-      }, 2000)
-  }
+
   return (
     <div>
       <h2>Anecdotes</h2>
       <Notification/>
       <Filter/>
-      <AnecdoteList displayNotification = {displayNotification}/>
-      <AnecdoteForm displayNotification = {displayNotification} />
+      <AnecdoteList/>
+      <AnecdoteForm/>
     </div>
   )
 }
