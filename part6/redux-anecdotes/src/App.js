@@ -4,24 +4,25 @@ import AnecdoteList from './components/AnecdoteList'
 import Filter from './components/Filter'
 import Notification from './components/Notification'
 import { hideNoti, showNoti } from './reducers/notificationReducer'
+import { useEffect } from 'react'
+import anecdoteService from "./services/anecdotes"
+import { initializeAnecdotes, setAnecdotes } from './reducers/anecdoteReducer'
 
 const App = () => {
   const dispatch = useDispatch()
 
-  // function to display the notification in 5s
-  const displayNotification = (message) => {
-      dispatch(showNoti(message))
-      setTimeout(() => {
-        dispatch(hideNoti())
-      }, 2000)
-  }
+  useEffect(() => {
+    dispatch(initializeAnecdotes())
+  }, [dispatch])
+
+
   return (
     <div>
       <h2>Anecdotes</h2>
       <Notification/>
       <Filter/>
-      <AnecdoteList displayNotification = {displayNotification}/>
-      <AnecdoteForm displayNotification = {displayNotification} />
+      <AnecdoteList/>
+      <AnecdoteForm/>
     </div>
   )
 }
