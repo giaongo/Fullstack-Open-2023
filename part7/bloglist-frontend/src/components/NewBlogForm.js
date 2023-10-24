@@ -1,14 +1,19 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { createBlog } from '../reducers/blogReducer';
 
-const NewBlogForm = ({ createNewBlog }) => {
+const NewBlogForm = ({ data }) => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
+  const dispatch = useDispatch();
+
   const handleBlogFormSubmit = async (event) => {
     event.preventDefault();
     try {
-      await createNewBlog(title, author, url);
+      dispatch(createBlog({ title, author, url }));
+      data.current.toggleVisibility();
       setTitle('');
       setAuthor('');
       setUrl('');
@@ -16,6 +21,7 @@ const NewBlogForm = ({ createNewBlog }) => {
       console.log('ErrorAddingNewBlog', error);
     }
   };
+
   return (
     <div>
       <h2>create new</h2>
@@ -60,6 +66,7 @@ const NewBlogForm = ({ createNewBlog }) => {
 
 NewBlogForm.propTypes = {
   createNewBlog: PropTypes.func,
+  data: PropTypes.object,
 };
 
 export default NewBlogForm;

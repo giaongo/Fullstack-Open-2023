@@ -7,49 +7,19 @@ import Toggleble from './components/Toggleble';
 import blogService from './services/blogs';
 import { useDispatch } from 'react-redux';
 import { displayNotification } from './reducers/notificationReducer';
+import { setUpdates } from './reducers/updateReducer';
 
 const App = () => {
   const dispatch = useDispatch();
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [update, setUpdate] = useState(false);
-  const [notificationMessage, setNotificationMessage] = useState('');
-  const [notificationStatus, setNotificationStatus] = useState('');
-
   const blogFormRef = useRef();
 
   const logoutUser = () => {
     setUser('');
     setToken('');
     window.localStorage.clear();
-  };
-
-  const createNewBlog = async (title, author, url) => {
-    const result = await blogService.addNewBlog(token, { title, author, url });
-    try {
-      setUpdate(!update);
-      blogFormRef.current.toggleVisibility();
-      dispatch(
-        displayNotification(
-          {
-            message: `a new blog '${result.data.title}' by ${result.data.author} added`,
-            status: 'success',
-          },
-          5000,
-        ),
-      );
-    } catch (error) {
-      dispatch(
-        displayNotification(
-          {
-            message: error.message,
-            status: 'error',
-          },
-          5000,
-        ),
-      );
-      throw new Error('ErrorAddingNewBlog' + error);
-    }
   };
 
   useEffect(() => {
@@ -78,7 +48,7 @@ const App = () => {
             Logout
           </button>
           <Toggleble buttonLabel="create new blog" ref={blogFormRef}>
-            <NewBlogForm createNewBlog={createNewBlog} />
+            <NewBlogForm data={blogFormRef} />
           </Toggleble>
 
           <BlogsDisplay

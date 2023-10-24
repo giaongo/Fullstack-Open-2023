@@ -19,6 +19,7 @@ const Blog = ({ blog, user, increaseLikeNumber, deleteBlog }) => {
     setVisibleBlogDetail(!visibleBlogDetail);
   };
 
+  console.log('blog is', blog.user.id);
   return (
     <div style={blogStyle} className="blog">
       <div style={{ color: '#02507a', fontWeight: 'bold' }}>
