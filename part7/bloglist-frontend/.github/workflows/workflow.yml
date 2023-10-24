@@ -6,7 +6,7 @@ on:
       - part7
   pull_request:
     branches:
-      - main
+      - part7
 jobs:
   build:
     runs-on: ubuntu-latest
