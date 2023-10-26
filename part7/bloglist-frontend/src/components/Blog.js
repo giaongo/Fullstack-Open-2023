@@ -1,9 +1,14 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-const Blog = ({ blog, user, increaseLikeNumber, deleteBlog }) => {
+import { useDispatch } from 'react-redux';
+import { updateLike } from '../reducers/blogReducer';
+
+const Blog = ({ blog, user, deleteBlog }) => {
   const [visibleBlogDetail, setVisibleBlogDetail] = useState(false);
   const [likeBlogNumber, setLikeBlogNumber] = useState(blog.likes);
+  const dispatch = useDispatch();
   const visibleDeleteBtn = blog && user ? blog.user.id === user.id : false;
+
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -18,8 +23,10 @@ const Blog = ({ blog, user, increaseLikeNumber, deleteBlog }) => {
   const toggleDetailVisibiity = () => {
     setVisibleBlogDetail(!visibleBlogDetail);
   };
+  console.log('visible delete button for ' + blog.title, visibleDeleteBtn);
+  console.log('user id for' + blog.title, user.id);
+  console.log('blog owner id for ' + blog.title, blog.user.id);
 
-  console.log('blog is', blog.user.id);
   return (
     <div style={blogStyle} className="blog">
       <div style={{ color: '#02507a', fontWeight: 'bold' }}>
@@ -51,8 +58,8 @@ const Blog = ({ blog, user, increaseLikeNumber, deleteBlog }) => {
                 borderRadius: 5,
               }}
               onClick={async () => {
-                const likes = await increaseLikeNumber(likeBlogNumber, blog);
-                setLikeBlogNumber(likes);
+                setLikeBlogNumber(likeBlogNumber + 1);
+                dispatch(updateLike(blog));
               }}
             >
               Like
@@ -87,7 +94,6 @@ const Blog = ({ blog, user, increaseLikeNumber, deleteBlog }) => {
 Blog.propTypes = {
   blog: PropTypes.object,
   user: PropTypes.object,
-  increaseLikeNumber: PropTypes.func,
   deleteBlog: PropTypes.func,
 };
 export default Blog;

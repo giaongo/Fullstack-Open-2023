@@ -23,10 +23,12 @@ const addNewBlog = async (token, newBlog) => {
     throw new Error('ErrorAddingNewBlog: ' + error.response.data.error);
   }
 };
-const updateLike = async (blogId, likeNum) => {
+const updateLike = async (blog) => {
   try {
-    const response = await axios.put(baseUrl + blogId, { likes: likeNum });
-    return response.data;
+    const response = await axios.put(baseUrl + blog.id, {
+      likes: blog.likes + 1,
+    });
+    return response;
   } catch (error) {
     throw new Error('ErrorUpdatingLike: ' + error.response.data.error);
   }
@@ -37,7 +39,7 @@ const deleteBlog = async (blogId, token) => {
       headers: { Authorization: 'Bearer ' + token },
     };
     const response = await axios.delete(baseUrl + blogId, config);
-    return response.data;
+    return response;
   } catch (error) {
     throw new Error('ErrorDeletingABlog: ' + error.response.data.error);
   }

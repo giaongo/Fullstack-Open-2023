@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import blogService from '../services/blogs';
 import { displayNotification } from './notificationReducer';
-import { setUpdates } from './updateReducer';
 const blogSlice = createSlice({
   name: 'blog',
   initialState: [],
@@ -13,6 +12,15 @@ const blogSlice = createSlice({
       const newState = state.concat(action.payload);
       console.log('newstate is ', newState);
       return newState;
+    },
+    increaseLikeNumber(state, action) {
+      const newState = state.map((data) =>
+        data.id === action.payload.id ? action.payload : data,
+      );
+      return newState;
+    },
+    deleteBlog(state, action) {
+      return state.filter((data) => data.id !== action.payload.id);
     },
   },
 });
@@ -35,7 +43,6 @@ export const createBlog = (newBlog) => {
     try {
       const response = await blogService.addNewBlog(token, newBlog);
       dispatch(addNewBlog(response.data));
-      dispatch(setUpdates());
       dispatch(
         displayNotification(
           {
@@ -59,5 +66,17 @@ export const createBlog = (newBlog) => {
   };
 };
 
-export const { setBlogs, addNewBlog } = blogSlice.actions;
+export const updateLike = (blog) => {
+  return async (dispatch) => {
+    try {
+      const response = await blogService.updateLike(blog);
+      console.log('response from updateLike', response.data);
+      dispatch(increaseLikeNumber(response.data));
+    } catch (error) {
+      console.error('updateLikeError', error);
+    }
+  };
+};
+
+export const { setBlogs, addNewBlog, increaseLikeNumber } = blogSlice.actions;
 export default blogSlice.reducer;

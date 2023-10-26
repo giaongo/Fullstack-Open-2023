@@ -4,16 +4,10 @@ import LoginForm from './components/LoginForm';
 import NewBlogForm from './components/NewBlogForm';
 import Notification from './components/Notification';
 import Toggleble from './components/Toggleble';
-import blogService from './services/blogs';
-import { useDispatch } from 'react-redux';
-import { displayNotification } from './reducers/notificationReducer';
-import { setUpdates } from './reducers/updateReducer';
 
 const App = () => {
-  const dispatch = useDispatch();
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
-  const [update, setUpdate] = useState(false);
   const blogFormRef = useRef();
 
   const logoutUser = () => {
@@ -51,12 +45,7 @@ const App = () => {
             <NewBlogForm data={blogFormRef} />
           </Toggleble>
 
-          <BlogsDisplay
-            token={token}
-            user={user}
-            update={update}
-            setUpdate={setUpdate}
-          />
+          <BlogsDisplay token={token} user={user} />
         </>
       )}
     </div>
