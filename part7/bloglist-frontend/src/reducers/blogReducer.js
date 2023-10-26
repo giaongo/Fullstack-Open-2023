@@ -20,6 +20,7 @@ const blogSlice = createSlice({
       return newState;
     },
     deleteBlog(state, action) {
+      console.log('action payload is', action.payload);
       return state.filter((data) => data.id !== action.payload.id);
     },
   },
@@ -72,11 +73,60 @@ export const updateLike = (blog) => {
       const response = await blogService.updateLike(blog);
       console.log('response from updateLike', response.data);
       dispatch(increaseLikeNumber(response.data));
+      dispatch(
+        displayNotification(
+          {
+            message: `Like increase for ${blog.title}`,
+            status: 'success',
+          },
+          5000,
+        ),
+      );
     } catch (error) {
       console.error('updateLikeError', error);
+      dispatch(
+        displayNotification(
+          {
+            message: error.message,
+            status: 'error',
+          },
+          5000,
+        ),
+      );
     }
   };
 };
 
-export const { setBlogs, addNewBlog, increaseLikeNumber } = blogSlice.actions;
+export const removeBlog = (blog) => {
+  const token = JSON.parse(window.localStorage.getItem('user')).token;
+  return async (dispatch) => {
+    try {
+      const response = await blogService.deleteBlog(blog.id, token);
+      dispatch(deleteBlog(blog));
+      dispatch(
+        displayNotification(
+          {
+            message: `${blog.title} is removed successfully`,
+            status: 'success',
+          },
+          5000,
+        ),
+      );
+    } catch (error) {
+      console.error('delete blog error', error);
+      dispatch(
+        displayNotification(
+          {
+            message: error.message,
+            status: 'error',
+          },
+          5000,
+        ),
+      );
+    }
+  };
+};
+
+export const { setBlogs, addNewBlog, increaseLikeNumber, deleteBlog } =
+  blogSlice.actions;
 export default blogSlice.reducer;

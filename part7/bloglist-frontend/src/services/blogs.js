@@ -39,6 +39,7 @@ const deleteBlog = async (blogId, token) => {
       headers: { Authorization: 'Bearer ' + token },
     };
     const response = await axios.delete(baseUrl + blogId, config);
+
     return response;
   } catch (error) {
     throw new Error('ErrorDeletingABlog: ' + error.response.data.error);

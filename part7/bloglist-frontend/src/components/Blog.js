@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateLike } from '../reducers/blogReducer';
+import { removeBlog } from '../reducers/blogReducer';
 
 const Blog = ({ blog, user, deleteBlog }) => {
   const [visibleBlogDetail, setVisibleBlogDetail] = useState(false);
@@ -79,7 +80,7 @@ const Blog = ({ blog, user, deleteBlog }) => {
                   borderRadius: 5,
                   cursor: 'pointer',
                 }}
-                onClick={async () => await deleteBlog(blog)}
+                onClick={async () => dispatch(removeBlog(blog))}
               >
                 Delete
               </button>
