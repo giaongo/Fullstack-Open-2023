@@ -1,15 +1,15 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import BlogsDisplay from './components/BlogsDisplay';
 import LoginForm from './components/LoginForm';
-import NewBlogForm from './components/NewBlogForm';
 import Notification from './components/Notification';
-import Toggleble from './components/Toggleble';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, logout } from './reducers/userReducer';
-
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Users from './components/Users';
+import User from './components/User';
 const App = () => {
   const userInfo = useSelector((state) => state.user);
-  const blogFormRef = useRef();
+
   const dispatch = useDispatch();
 
   const logoutUser = () => {
@@ -27,29 +27,31 @@ const App = () => {
   }, []);
 
   return (
-    <div>
-      <h2>blogs</h2>
-      <Notification />
-      {userInfo.id === '' ? (
-        <LoginForm />
-      ) : (
-        <>
-          <span>{userInfo.name} logged in</span>
-          <button
-            id="logoutBtn"
-            style={{ marginLeft: 10 }}
-            onClick={logoutUser}
-          >
-            Logout
-          </button>
-          <Toggleble buttonLabel="create new blog" ref={blogFormRef}>
-            <NewBlogForm data={blogFormRef} />
-          </Toggleble>
-
-          <BlogsDisplay />
-        </>
-      )}
-    </div>
+    <Router>
+      <div>
+        <h2>blogs</h2>
+        <Notification />
+        {userInfo.id === '' ? (
+          <LoginForm />
+        ) : (
+          <>
+            <span>{userInfo.name} logged in</span>
+            <button
+              id="logoutBtn"
+              style={{ marginLeft: 10 }}
+              onClick={logoutUser}
+            >
+              Logout
+            </button>
+            <Routes>
+              <Route path="/blogs" element={<BlogsDisplay />} />
+              <Route path="/users" element={<Users />} />
+              <Route path="/users/:id" element={<User />} />
+            </Routes>
+          </>
+        )}
+      </div>
+    </Router>
   );
 };
 
