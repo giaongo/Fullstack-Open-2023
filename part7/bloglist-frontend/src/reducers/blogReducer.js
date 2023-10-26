@@ -27,9 +27,8 @@ const blogSlice = createSlice({
 });
 
 export const getAllBlogs = () => {
-  const token = JSON.parse(window.localStorage.getItem('user')).token;
-  return async (dispatch) => {
-    const response = await blogService.getAll(token);
+  return async (dispatch, getState) => {
+    const response = await blogService.getAll(getState().user.token);
     response.sort(
       (firstBlog, secondBlog) => secondBlog.likes - firstBlog.likes,
     );
@@ -38,11 +37,12 @@ export const getAllBlogs = () => {
 };
 
 export const createBlog = (newBlog) => {
-  const token = JSON.parse(window.localStorage.getItem('user')).token;
-  console.log('new blog to add is', newBlog);
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
-      const response = await blogService.addNewBlog(token, newBlog);
+      const response = await blogService.addNewBlog(
+        getState().user.token,
+        newBlog,
+      );
       dispatch(addNewBlog(response.data));
       dispatch(
         displayNotification(
@@ -98,10 +98,12 @@ export const updateLike = (blog) => {
 };
 
 export const removeBlog = (blog) => {
-  const token = JSON.parse(window.localStorage.getItem('user')).token;
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
-      const response = await blogService.deleteBlog(blog.id, token);
+      const response = await blogService.deleteBlog(
+        blog.id,
+        getState().user.token,
+      );
       dispatch(deleteBlog(blog));
       dispatch(
         displayNotification(

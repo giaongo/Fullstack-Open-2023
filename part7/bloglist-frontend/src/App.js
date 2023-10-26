@@ -4,15 +4,16 @@ import LoginForm from './components/LoginForm';
 import NewBlogForm from './components/NewBlogForm';
 import Notification from './components/Notification';
 import Toggleble from './components/Toggleble';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser, logout } from './reducers/userReducer';
 
 const App = () => {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
+  const userInfo = useSelector((state) => state.user);
   const blogFormRef = useRef();
+  const dispatch = useDispatch();
 
   const logoutUser = () => {
-    setUser('');
-    setToken('');
+    dispatch(logout());
     window.localStorage.clear();
   };
 
@@ -20,8 +21,8 @@ const App = () => {
     const loggedInUserJSON = window.localStorage.getItem('user');
     if (loggedInUserJSON) {
       const loggedInUser = JSON.parse(loggedInUserJSON);
-      setUser({ name: loggedInUser.name, id: loggedInUser.id });
-      setToken(loggedInUser.token);
+      dispatch(loginUser(loggedInUser));
+      console.log('user info is', userInfo);
     }
   }, []);
 
@@ -29,11 +30,11 @@ const App = () => {
     <div>
       <h2>blogs</h2>
       <Notification />
-      {!user ? (
-        <LoginForm setUser={setUser} setToken={setToken} />
+      {userInfo.id === '' ? (
+        <LoginForm />
       ) : (
         <>
-          <span>{user.name} logged in</span>
+          <span>{userInfo.name} logged in</span>
           <button
             id="logoutBtn"
             style={{ marginLeft: 10 }}
@@ -45,7 +46,7 @@ const App = () => {
             <NewBlogForm data={blogFormRef} />
           </Toggleble>
 
-          <BlogsDisplay token={token} user={user} />
+          <BlogsDisplay />
         </>
       )}
     </div>

@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateLike } from '../reducers/blogReducer';
 import { removeBlog } from '../reducers/blogReducer';
 
-const Blog = ({ blog, user, deleteBlog }) => {
+const Blog = ({ blog }) => {
   const [visibleBlogDetail, setVisibleBlogDetail] = useState(false);
   const [likeBlogNumber, setLikeBlogNumber] = useState(blog.likes);
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const visibleDeleteBtn = blog && user ? blog.user.id === user.id : false;
 
@@ -24,10 +25,6 @@ const Blog = ({ blog, user, deleteBlog }) => {
   const toggleDetailVisibiity = () => {
     setVisibleBlogDetail(!visibleBlogDetail);
   };
-  console.log('visible delete button for ' + blog.title, visibleDeleteBtn);
-  console.log('user id for' + blog.title, user.id);
-  console.log('blog owner id for ' + blog.title, blog.user.id);
-
   return (
     <div style={blogStyle} className="blog">
       <div style={{ color: '#02507a', fontWeight: 'bold' }}>
@@ -94,7 +91,5 @@ const Blog = ({ blog, user, deleteBlog }) => {
 
 Blog.propTypes = {
   blog: PropTypes.object,
-  user: PropTypes.object,
-  deleteBlog: PropTypes.func,
 };
 export default Blog;
