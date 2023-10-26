@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import userService from '../services/user';
 import { useState, useEffect } from 'react';
-import { List, dense, ListItem, ListItemText } from '@mui/material';
+
 const User = () => {
   const { id } = useParams();
   const [user, setUser] = useState(null);

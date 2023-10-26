@@ -7,6 +7,8 @@ import { loginUser, logout } from './reducers/userReducer';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Users from './components/Users';
 import User from './components/User';
+import Detail from './components/Detail';
+
 const App = () => {
   const userInfo = useSelector((state) => state.user);
 
@@ -44,9 +46,10 @@ const App = () => {
               Logout
             </button>
             <Routes>
-              <Route path="/blogs" element={<BlogsDisplay />} />
+              <Route path="/" element={<BlogsDisplay />} />
               <Route path="/users" element={<Users />} />
               <Route path="/users/:id" element={<User />} />
+              <Route path="/blogs/:id" element={<Detail />} />
             </Routes>
           </>
         )}

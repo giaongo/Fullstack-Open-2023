@@ -8,6 +8,14 @@ blogRouter.get("/", async (request, response) => {
   response.status(201).json(blogs);
 });
 
+blogRouter.get("/:id", async (request, response) => {
+  const blog = await Blog.findById(request.params.id).populate("user", {
+    username: 1,
+    name: 1,
+  });
+  response.status(201).json(blog);
+});
+
 blogRouter.post("/", userExtractor, async (request, response) => {
   const blogToAdd = request.body;
   const user = request.user;

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateLike } from '../reducers/blogReducer';
 import { removeBlog } from '../reducers/blogReducer';
+import { Link } from 'react-router-dom';
 
 const Blog = ({ blog }) => {
   const [visibleBlogDetail, setVisibleBlogDetail] = useState(false);
@@ -29,7 +30,7 @@ const Blog = ({ blog }) => {
     <div style={blogStyle} className="blog">
       <div style={{ color: '#02507a', fontWeight: 'bold' }}>
         <span>
-          {blog.title} - {blog.author}
+          <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
         </span>
         <button
           onClick={toggleDetailVisibiity}

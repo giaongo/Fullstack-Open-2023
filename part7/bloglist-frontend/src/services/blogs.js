@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseUrl = 'api/blogs/';
+const baseUrl = 'http://localhost:3003/api/blogs/';
 
 const getAll = async (token) => {
   try {
@@ -12,6 +12,16 @@ const getAll = async (token) => {
     throw new Error('ErrorGettingUser: ' + error.response.data.error);
   }
 };
+
+const getBlogById = async (blogId) => {
+  try {
+    const response = await axios.get(baseUrl + blogId);
+    return response;
+  } catch (error) {
+    throw new Error('ErrorGettingBlogById: ' + error.response.data.error);
+  }
+};
+
 const addNewBlog = async (token, newBlog) => {
   try {
     const config = {
@@ -46,4 +56,4 @@ const deleteBlog = async (blogId, token) => {
   }
 };
 
-export default { getAll, addNewBlog, updateLike, deleteBlog };
+export default { getAll, addNewBlog, updateLike, deleteBlog, getBlogById };
