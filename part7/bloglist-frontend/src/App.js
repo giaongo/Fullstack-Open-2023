@@ -8,7 +8,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Users from './components/Users';
 import User from './components/User';
 import Detail from './components/Detail';
-
+import AppBar from '@mui/material/AppBar';
+import { Button, Toolbar, Typography } from '@mui/material';
 const App = () => {
   const userInfo = useSelector((state) => state.user);
 
@@ -30,18 +31,25 @@ const App = () => {
 
   return (
     <Router>
-      <div>
-        <div style={{ marginBottom: 50 }}>
-          <Link to="/" style={{ padding: 10 }}>
-            blogs
-          </Link>
-          <Link to="/users" style={{ padding: 10 }}>
-            users
-          </Link>
-          {userInfo.id === '' ? (
-            <Link to="/login" style={{ padding: 10 }}>
-              login
+      <AppBar style={{ marginBottom: 50 }}>
+        <Toolbar>
+          <Button color="inherit">
+            <Link to="/" style={{ padding: 10, color: '#fff' }}>
+              <Typography textAlign="center">blogs</Typography>
             </Link>
+          </Button>
+          <Button color="inherit">
+            <Link to="/users" style={{ padding: 10, color: '#fff' }}>
+              users
+            </Link>
+          </Button>
+
+          {userInfo.id === '' ? (
+            <Button color="inherit">
+              <Link to="/login" style={{ padding: 10 }}>
+                login
+              </Link>
+            </Button>
           ) : (
             <span>
               {userInfo.name} logged in
@@ -54,21 +62,21 @@ const App = () => {
               </button>
             </span>
           )}
-        </div>
+        </Toolbar>
+      </AppBar>
 
-        <Notification />
+      <Notification />
 
-        <Routes>
-          <Route
-            path="/"
-            element={userInfo.id !== '' ? <BlogsDisplay /> : <LoginForm />}
-          />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/users" element={<Users />} />
-          <Route path="/users/:id" element={<User />} />
-          <Route path="/blogs/:id" element={<Detail />} />
-        </Routes>
-      </div>
+      <Routes>
+        <Route
+          path="/"
+          element={userInfo.id !== '' ? <BlogsDisplay /> : <LoginForm />}
+        />
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/users/:id" element={<User />} />
+        <Route path="/blogs/:id" element={<Detail />} />
+      </Routes>
     </Router>
   );
 };

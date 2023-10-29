@@ -10,6 +10,7 @@ const Notification = () => {
         border: `5px solid ${
           notification.status === 'success' ? 'green' : 'red'
         }`,
+        marginTop: '120px',
         marginBottom: 15,
         display: notification.isVisible ? 'block' : 'none',
       }}

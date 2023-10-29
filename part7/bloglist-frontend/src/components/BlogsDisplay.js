@@ -15,7 +15,7 @@ const BlogsDisplay = () => {
   }, []);
 
   return (
-    <div>
+    <div style={{ marginTop: '80px', padding: '20px' }}>
       <h2>blogs</h2>
       <Toggleble buttonLabel="create new blog" ref={blogFormRef}>
         <NewBlogForm data={blogFormRef} />

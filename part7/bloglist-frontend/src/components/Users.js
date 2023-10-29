@@ -25,7 +25,7 @@ const Users = () => {
   }, []);
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div style={{ marginTop: '80px', padding: '20px' }}>
       <h2>Users</h2>
       <TableContainer component={Paper}>
         <Table>

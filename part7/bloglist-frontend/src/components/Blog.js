@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateLike } from '../reducers/blogReducer';
 import { removeBlog } from '../reducers/blogReducer';
 import { Link } from 'react-router-dom';
+import { Button, CardActions, CardContent, Typography } from '@mui/material';
 
 const Blog = ({ blog }) => {
   const [visibleBlogDetail, setVisibleBlogDetail] = useState(false);
@@ -14,7 +15,7 @@ const Blog = ({ blog }) => {
 
   const blogStyle = {
     paddingTop: 10,
-    paddingLeft: 2,
+    padding: 15,
     border: 'solid',
     borderWidth: 1,
     marginBottom: 5,
@@ -27,18 +28,20 @@ const Blog = ({ blog }) => {
     setVisibleBlogDetail(!visibleBlogDetail);
   };
   return (
-    <div style={blogStyle} className="blog">
+    <CardContent style={blogStyle} className="blog">
       <div style={{ color: '#02507a', fontWeight: 'bold' }}>
-        <span>
+        <Typography variant="h6" component="span">
           <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
-        </span>
-        <button
-          onClick={toggleDetailVisibiity}
-          style={viewBtnStyle}
-          className="detailBtn"
-        >
-          {visibleBlogDetail ? 'hide' : 'view'}
-        </button>
+        </Typography>
+        <CardActions>
+          <Button
+            onClick={toggleDetailVisibiity}
+            style={viewBtnStyle}
+            className="detailBtn"
+          >
+            {visibleBlogDetail ? 'hide' : 'view'}
+          </Button>
+        </CardActions>
       </div>
       {visibleBlogDetail && (
         <div className="togglableContent">
@@ -64,8 +67,10 @@ const Blog = ({ blog }) => {
               Like
             </button>
           </div>
-          <div>{blog.user.name}</div>
-          <div>{blog.comments.length} comments</div>
+          <Typography variant="body2">{blog.user.name}</Typography>
+          <Typography variant="body2">
+            {blog.comments.length} comments
+          </Typography>
           {visibleDeleteBtn && (
             <>
               <button
@@ -87,7 +92,7 @@ const Blog = ({ blog }) => {
           )}
         </div>
       )}
-    </div>
+    </CardContent>
   );
 };
 
