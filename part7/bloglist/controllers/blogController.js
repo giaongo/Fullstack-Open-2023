@@ -34,6 +34,22 @@ blogRouter.post("/", userExtractor, async (request, response) => {
     .json(await result.populate("user", { username: 1, name: 1 }));
 });
 
+blogRouter.post("/:id/comments", async (request, response) => {
+  const commentToAdd = request.body;
+  const blogId = request.params.id;
+  if (!commentToAdd.comment) {
+    return response.status(400).json({ error: "missing data" });
+  }
+  const blog = await Blog.findById(blogId);
+  blog.comments = blog.comments.concat(commentToAdd.comment);
+  const result = await blog.save();
+  if (result !== null) {
+    response.status(201).json({ message: "comment added successfully" });
+  } else {
+    response.status(404).json({ error: "comment added failed" });
+  }
+});
+
 blogRouter.delete("/:id", userExtractor, async (request, response) => {
   const blogIdToDelete = request.params.id;
   const user = request.user;
