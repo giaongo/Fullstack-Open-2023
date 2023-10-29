@@ -12,7 +12,7 @@ const BlogsDisplay = () => {
 
   useEffect(() => {
     dispatch(getAllBlogs());
-  }, [dispatch]);
+  }, []);
 
   return (
     <div>

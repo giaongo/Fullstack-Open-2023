@@ -65,6 +65,7 @@ const Blog = ({ blog }) => {
             </button>
           </div>
           <div>{blog.user.name}</div>
+          <div>{blog.comments.length} comments</div>
           {visibleDeleteBtn && (
             <>
               <button

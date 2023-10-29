@@ -44,7 +44,7 @@ blogRouter.post("/:id/comments", async (request, response) => {
   blog.comments = blog.comments.concat(commentToAdd.comment);
   const result = await blog.save();
   if (result !== null) {
-    response.status(201).json({ message: "comment added successfully" });
+    response.status(201).json(result);
   } else {
     response.status(404).json({ error: "comment added failed" });
   }

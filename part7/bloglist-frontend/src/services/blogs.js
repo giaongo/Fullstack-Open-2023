@@ -56,4 +56,22 @@ const deleteBlog = async (blogId, token) => {
   }
 };
 
-export default { getAll, addNewBlog, updateLike, deleteBlog, getBlogById };
+const pushComment = async (blogId, comment) => {
+  try {
+    const response = await axios.post(baseUrl + blogId + '/comments', {
+      comment,
+    });
+    return response;
+  } catch (error) {
+    throw new Error('ErrorPushingComment: ' + error.response.data.error);
+  }
+};
+
+export default {
+  getAll,
+  addNewBlog,
+  updateLike,
+  deleteBlog,
+  getBlogById,
+  pushComment,
+};
