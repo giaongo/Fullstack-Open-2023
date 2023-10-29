@@ -16,6 +16,7 @@ const BlogsDisplay = () => {
 
   return (
     <div>
+      <h2>blogs</h2>
       <Toggleble buttonLabel="create new blog" ref={blogFormRef}>
         <NewBlogForm data={blogFormRef} />
       </Toggleble>

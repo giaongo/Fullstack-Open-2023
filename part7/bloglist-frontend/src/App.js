@@ -31,28 +31,43 @@ const App = () => {
   return (
     <Router>
       <div>
-        <h2>blogs</h2>
+        <div style={{ marginBottom: 50 }}>
+          <Link to="/" style={{ padding: 10 }}>
+            blogs
+          </Link>
+          <Link to="/users" style={{ padding: 10 }}>
+            users
+          </Link>
+          {userInfo.id === '' ? (
+            <Link to="/login" style={{ padding: 10 }}>
+              login
+            </Link>
+          ) : (
+            <span>
+              {userInfo.name} logged in
+              <button
+                id="logoutBtn"
+                style={{ marginLeft: 10 }}
+                onClick={logoutUser}
+              >
+                Logout
+              </button>
+            </span>
+          )}
+        </div>
+
         <Notification />
-        {userInfo.id === '' ? (
-          <LoginForm />
-        ) : (
-          <>
-            <span>{userInfo.name} logged in</span>
-            <button
-              id="logoutBtn"
-              style={{ marginLeft: 10 }}
-              onClick={logoutUser}
-            >
-              Logout
-            </button>
-            <Routes>
-              <Route path="/" element={<BlogsDisplay />} />
-              <Route path="/users" element={<Users />} />
-              <Route path="/users/:id" element={<User />} />
-              <Route path="/blogs/:id" element={<Detail />} />
-            </Routes>
-          </>
-        )}
+
+        <Routes>
+          <Route
+            path="/"
+            element={userInfo.id !== '' ? <BlogsDisplay /> : <LoginForm />}
+          />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/users/:id" element={<User />} />
+          <Route path="/blogs/:id" element={<Detail />} />
+        </Routes>
       </div>
     </Router>
   );
